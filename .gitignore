@@ -1,48 +1,35 @@
-# Prerequisites
+# =============================================================================
+# Generated files
+# =============================================================================
+
+# vmlinux.h is kernel-specific and must be regenerated for each machine/kernel.
+# Run `make vmlinux` to produce it with bpftool.
+vmlinux.h
+
+# =============================================================================
+# Build artifacts
+# =============================================================================
+
+# All compiled outputs land in bin/
+bin/
+
+# Dependency / prerequisite files
 *.d
 
-# Object files
-*.o
-*.ko
-*.obj
-*.elf
+# =============================================================================
+# Debug / symbol files
+# =============================================================================
 
-# Linker output
-*.ilk
-*.map
-*.exp
-
-# Precompiled Headers
-*.gch
-*.pch
-
-# Libraries
-*.lib
-*.a
-*.la
-*.lo
-
-# Shared objects (inc. Windows DLLs)
-*.dll
-*.so
-*.so.*
-*.dylib
-
-# Executables
-*.exe
-*.out
-*.app
-*.i*86
-*.x86_64
-*.hex
-
-# Debug files
 *.dSYM/
 *.su
 *.idb
 *.pdb
+*.dwo
 
-# Kernel Module Compile Results
+# =============================================================================
+# Kernel module build artifacts
+# =============================================================================
+
 *.mod*
 *.cmd
 .tmp_versions/
@@ -51,5 +38,20 @@ Module.symvers
 Mkfile.old
 dkms.conf
 
-# debug information files
-*.dwo
+# =============================================================================
+# Editor / OS noise
+# =============================================================================
+
+# CLion / JetBrains
+.idea/
+cmake-build-*/
+
+# macOS
+.DS_Store
+
+# Linux
+*~
+
+# Tags
+tags
+TAGS
