@@ -20,7 +20,7 @@ struct {
 } ip_count_map SEC(".maps");
 
 SEC("xdp_count_ipv4")
-int count_ipv4(struct xdp_md *ctx)
+int xdp_count_ipv4(struct xdp_md *ctx)
 {
     void *data_end = (void *)(long)ctx->data_end;
     void *data = (void *)(long)ctx->data;

@@ -21,21 +21,29 @@ CXX_FLAGS := -std=c++17 -Wall -Wextra
 #   -g           embed BTF / DWARF debug info so bpftool can introspect the obj
 #   -target bpf  cross-compile for the BPF virtual machine
 #   -I.          find vmlinux.h in the repository root
-BPF_CFLAGS := -O2 -g -target bpf -I.
+BPF_CFLAGS := -O2 -g -target bpf -I. -I/usr/include/x86_64-linux-gnu
 
 BIN := bin
 
 # ── Targets ───────────────────────────────────────────────────────────────────
 .PHONY: all clean vmlinux
 
-all: $(BIN)/pkt_counter $(BIN)/ip_cnt_kern.o
+all: $(BIN)/pkt_counter $(BIN)/pkt_counter_filter.o $(BIN)/ip_logger $(BIN)/ip_logger_filter.o
+
+# Userspace loader
+$(BIN)/ip_logger: ip_logger.cpp | $(BIN)
+	$(CXX) $(CXX_FLAGS) $< -lbpf -lxdp -o $@
+
+# BPF kernel program
+$(BIN)/ip_logger_filter.o: ip_logger_filter.c | $(BIN)
+	$(CC) $(BPF_CFLAGS) -c $< -o $@
 
 # Userspace loader
 $(BIN)/pkt_counter: pkt_counter.cpp | $(BIN)
 	$(CXX) $(CXX_FLAGS) $< -lbpf -lxdp -o $@
 
 # BPF kernel program
-$(BIN)/ip_cnt_kern.o: ip_cnt_kern.c vmlinux.h | $(BIN)
+$(BIN)/pkt_counter_filter.o: pkt_counter_filter.c vmlinux.h | $(BIN)
 	$(CC) $(BPF_CFLAGS) -c $< -o $@
 
 # Create bin/ if it does not exist yet

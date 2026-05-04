@@ -13,7 +13,7 @@ xdp-scratch/
 ├── scripts/
 │   └── gen_vmlinux.sh
 ├── bin/                    # compiled outputs (.o, binaries)
-├── ip_cnt_kern.c
+├── pkt_counter_filter.c
 └── pkt_counter.cpp
 ```
 
@@ -51,7 +51,7 @@ Counts IPv4 vs non-IPv4 packets via a BPF array map. The C++ loader attaches the
 
 ```bash
 make
-sudo ./bin/pkt_counter <interface> bin/ip_cnt_kern.o
+sudo ./bin/pkt_counter <interface> bin/pkt_counter_filter.o
 # => ipv4 count: 42
 ```
 
